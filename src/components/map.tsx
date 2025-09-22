@@ -42,12 +42,14 @@ export default function Map({city, marker, setMarker}: _MapProps) {
     svgPoint.y = e.clientY;
 
     const ctm = svg.getScreenCTM();
-    const currentPoint = svgPoint.matrixTransform(ctm.inverse());
-    const point = { x: currentPoint.x, y: currentPoint.y };
-    const geo = svgToGeo(props, point)
+    if (ctm) {
+      const currentPoint = svgPoint.matrixTransform(ctm.inverse());
+      const point = { x: currentPoint.x, y: currentPoint.y };
+      const geo = svgToGeo(props, point)
 
-    // Marker set every time the user clicks on the map
-    setMarker({point, geo})
+      // Marker set every time the user clicks on the map
+      setMarker({ point, geo })
+    }
   }
 
   return (
