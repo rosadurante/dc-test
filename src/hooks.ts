@@ -17,15 +17,17 @@ export const useCities = () => {
   };
   
   const _fetchAllCities = async () => {
-    for (const city of citySet) {
+    const cities = Array.from(citySet);
+    for (let i = 0; i < citySet.size; i++) {
       setTimeout(() => {
-        _fetchCity(city).then(city => {
-          setCityList((prev: City[]) => city ? [...prev, city] : prev);
-        });
-      }, 1100);
+        _fetchCity(cities[i]).then(city =>
+          setCityList((prev: City[]) => city ? [...prev, city] : prev)
+        );
+      }, 1100 * i);
     }
   };
 
+  // To fetch all cities just once
   useEffect(() => {
     _fetchAllCities();
   }, []);
